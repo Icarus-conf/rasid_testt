@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -29,35 +30,41 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   bool offlineMode = false;
   String connectivityMessage = '';
   String? cvFilePath;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription _streamSubscription;
 
   @override
   void initState() {
     super.initState();
-    _checkConnectivity();
+    _checkInitialConnectivity();
 
-    Connectivity().onConnectivityChanged.listen((connectivityResult) {
-      _handleConnectivityChange(connectivityResult);
+    _streamSubscription = _connectivity.onConnectivityChanged.listen((result) {
+      _handleConnectivityChange(result);
     });
   }
 
-  Future<void> _checkConnectivity() async {
-    List<ConnectivityResult> connectivityResults =
-        await Connectivity().checkConnectivity();
-    await _handleConnectivityChange(connectivityResults);
+  @override
+  void dispose() {
+    _streamSubscription.cancel();
+    super.dispose();
   }
 
-  _handleConnectivityChange(List<ConnectivityResult> connectivityResults) {
+  Future<void> _checkInitialConnectivity() async {
+    List<ConnectivityResult> connectivityResults =
+        await _connectivity.checkConnectivity();
+    _handleConnectivityChange(connectivityResults);
+  }
+
+  void _handleConnectivityChange(List<ConnectivityResult> connectivityResults) {
     setState(() {
       offlineMode = connectivityResults.contains(ConnectivityResult.none);
-      connectivityMessage =
-          offlineMode ? "You are offline." : "You are online.";
     });
 
     if (!offlineMode) {
       if (connectivityResults.contains(ConnectivityResult.mobile)) {
         log("Mobile network available.");
       } else if (connectivityResults.contains(ConnectivityResult.wifi)) {
-        log("Wi-fi is available.");
+        log("Wi-Fi is available.");
       }
 
       _submitStoredData();
@@ -121,14 +128,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            if (connectivityMessage.isNotEmpty)
-              Text(
-                textAlign: TextAlign.center,
-                connectivityMessage,
-                style: TextStyle(
-                  color: offlineMode ? Colors.red : Colors.green,
-                ),
-              ),
             const Text("Full Name"),
             CustomTextField(
               controller: nameController,

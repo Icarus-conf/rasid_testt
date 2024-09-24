@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:gap/gap.dart';
 import 'package:rasid_test/Config/routes/routes_config.dart';
 
@@ -71,8 +71,8 @@ class _QrScannerViewState extends State<QrScannerView> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: SvgPicture.asset(
-                        "assets/svg/scanner_ic.svg",
+                      child: Image.asset(
+                        "assets/icons/scanner.png",
                         width: 100,
                         color: Colors.white,
                       ),

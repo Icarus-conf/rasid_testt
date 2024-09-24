@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rasid_test/Features/Home/presentation/views/home_view.dart';
-import 'package:rasid_test/Features/Home/presentation/views/widgets/finish_task_view.dart';
 import 'package:rasid_test/Features/Qr_scanner/views/qr_scanner_view.dart';
 import 'package:rasid_test/Features/Qr_scanner/views/widgets/scanner_view.dart';
 
@@ -27,11 +26,6 @@ class AppRoutes {
       case RoutesName.homeView:
         return MaterialPageRoute(
           builder: (context) => const HomeView(),
-        );
-
-      case RoutesName.finishTaskView:
-        return MaterialPageRoute(
-          builder: (context) => const FinishTaskView(),
         );
 
       default:
