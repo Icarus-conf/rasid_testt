@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "830947868420",
+    "project_id": "rasid-test",
+    "storage_bucket": "rasid-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:830947868420:android:358c8071c61e4bdcb39a51",
+        "android_client_info": {
+          "package_name": "com.example.rasid_test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnFO7ZTAesj06whU5StH4fd20Y_ERNakw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
